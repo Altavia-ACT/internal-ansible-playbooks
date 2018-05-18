@@ -2,7 +2,7 @@
 - name: Change root password
   user:
     name: root
-    password: '{{ root_password }}'
+    password: '{{ root_passwd }}'
 
 - name: Lock the root user (use 'sudo passwd root' to re-enable)
   command: passwd -l root

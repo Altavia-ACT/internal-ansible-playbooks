@@ -1,7 +1,7 @@
 ---
 - name: copy cert-renew script
   copy:
-    src: templates/cert-renew.sh
+    src: files/cert-renew.sh
     dest: /root/cert-renew.sh
     mode: 0755
 

@@ -9,10 +9,6 @@
     url: 'https://repo.mysql.com/RPM-GPG-KEY-mysql'
     state: present
 
-- name: Update apt cache
-  apt:
-    update_cach:  yes
-
 - name: Install mysql
   apt:
     package: mysql-server
@@ -29,4 +25,4 @@
 - name: install python mysql bindings
   apt:
     name: python-mysqldb
-    state: installed
+    state: present

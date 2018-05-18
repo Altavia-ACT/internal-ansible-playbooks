@@ -1,14 +1,8 @@
 ---
-- name: Add Nginx Repository
-  apt_repository:
-    repo: 'ppa:nginx/stable'
-    state: present
-  ignore_errors: yes
-
 - name: Install Nginx
   apt:
     pkg: nginx
-    state: installed
+    state: present
     update_cache: true
   notify:
     - Start Nginx

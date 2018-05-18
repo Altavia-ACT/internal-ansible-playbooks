@@ -1,6 +1,6 @@
 ---
 - hosts: web
-  sudo: yes
+  become: yes
   roles:
     - server-base
     - user

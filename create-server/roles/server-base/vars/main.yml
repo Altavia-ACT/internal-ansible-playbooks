@@ -13,7 +13,7 @@ packages:
   - htop
   - zsh
   - less
-  - built-essential
+  - build-essential
   - apt-transport-https
   - ca-certificates
   - certbot

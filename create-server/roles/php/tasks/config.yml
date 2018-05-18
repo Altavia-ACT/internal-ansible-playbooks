@@ -4,7 +4,7 @@
     path: /etc/php/7.1/fpm/pool.d/www.conf
     state: absent
   notify:
-    - Restart PHP7.2-fpm
+    - Restart PHP7.2-FPM
 
 - name: Create php-fpm pool directory
   file:
@@ -41,4 +41,4 @@
     src: files/php.ini
     dest: /etc/php/7.1/fpm/php.ini
   notify:
-    - Restart PHP7.2-fpm
+    - Restart PHP7.2-FPM
