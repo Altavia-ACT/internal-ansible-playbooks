@@ -1,0 +1,13 @@
+---
+hostname:
+
+root_passwd:
+
+mysql:
+mysql_root_passwd:
+
+php:
+redis:
+nodejs:
+
+ufw_from_ip:

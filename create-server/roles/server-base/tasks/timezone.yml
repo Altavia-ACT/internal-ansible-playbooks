@@ -1,0 +1,16 @@
+- name: Set timezone
+  copy:
+    content: CET
+    dest: /etc/timezone
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Remove existing localtime configuration file
+  file: path=/etc/localtime state=absent
+
+- name: Set localtime to CET
+  file: src=/usr/share/zoneinfo/CET dest=/etc/localtime state=link owner=root group=root mode=0644
+
+- name: Reconfigure tzdata
+  command: dpkg-reconfigure -f noninteractive tzdata

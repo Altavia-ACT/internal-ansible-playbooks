@@ -1,0 +1,32 @@
+---
+- name: Create sources.list.d/mysql.list file
+  copy:
+    dest: /etc/apt/sources.list.d/mysql.list
+    src: files/mysql.list
+
+- name: Add mysql apt-key
+  apt_key:
+    url: 'https://repo.mysql.com/RPM-GPG-KEY-mysql'
+    state: present
+
+- name: Update apt cache
+  apt:
+    update_cach:  yes
+
+- name: Install mysql
+  apt:
+    package: mysql-server
+    state: present
+    update_cache: yes
+
+- name: Create mysql configuration file
+  copy:
+    src: files/mysql.cnf
+    dest: /etc/my.cnf
+  notify:
+    - Restart mysql
+
+- name: install python mysql bindings
+  apt:
+    name: python-mysqldb
+    state: installed

@@ -1,0 +1,23 @@
+packages:
+  - acl
+  - unattended-upgrades
+  - policykit-1
+  - ntp
+  - wget
+  - curl
+  - vim
+  - silversearcher-ag
+  - ack-grep
+  - git
+  - unzip
+  - htop
+  - zsh
+  - less
+  - built-essential
+  - apt-transport-https
+  - ca-certificates
+  - certbot
+  - supervisor
+  - libpng-dev
+  - imagemagick
+  - sendmail

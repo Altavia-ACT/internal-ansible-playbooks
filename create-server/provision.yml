@@ -1,0 +1,13 @@
+---
+- hosts: web
+  sudo: yes
+  roles:
+    - server-base
+    - user
+    - ssh
+    - security
+    - nginx
+    - { role: php, when: php != False }
+    - { role: redis, when: redis != False }
+    - { role: nodejs, when: nodejs != False }
+    - { role: mysql, when: mysql != False }

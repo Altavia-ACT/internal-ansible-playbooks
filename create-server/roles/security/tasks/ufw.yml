@@ -1,0 +1,53 @@
+---
+- name: Install ufw
+  apt:
+    name: 'ufw'
+    state: present
+    update_cache: yes
+
+- name: Add default policies firewall
+  ufw:
+    direction: '{{ item.direction }}'
+    policy: '{{ item.policy }}'
+  with_items:
+    - { direction: 'incoming', policy: 'deny' }
+    - { direction: 'outgoing', policy: 'allow' }
+
+- name: Configure ssh rule with ip restriction
+  ufw:
+    rule: allow
+    port: 22
+    proto: tcp
+    from_ip: '{{ ufw_from_ip }}'
+    direction: in
+  when: ufw_from_ip is defined
+
+- name: Configure ssh rule without ip restriction
+  ufw:
+    rule: allow
+    port: 22
+    proto: tcp
+    direction: in
+  when: ufw_from_ip is undefined
+
+- name: Configure ufw rules
+  ufw:
+    rule: allow
+    port: '{{ item.port }}'
+    proto: '{{ item.proto }}'
+    direction: '{{ item.direction }}'
+  with_items:
+    - { port: '80', proto: 'tcp', direction: 'in' }
+    - { port: '8443', proto: 'tcp', direction: 'in' }
+    - { port: '443', proto: 'tcp', direction: 'in' }
+    - { port: '53', proto: 'tcp', direction: 'in' }
+
+- name: Enable ufw logging
+  ufw:
+    logging: on
+  notify:
+    - Restart ufw
+
+- name: Enable ufw
+  ufw:
+    state: enabled

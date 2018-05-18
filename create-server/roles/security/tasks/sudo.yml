@@ -1,0 +1,15 @@
+---
+- name: Change root password
+  user:
+    name: root
+    password: '{{ root_password }}'
+
+- name: Lock the root user (use 'sudo passwd root' to re-enable)
+  command: passwd -l root
+
+- name: Remove sudo group rights
+  lineinfile:
+    dest: /etc/sudoers
+    regexp: '^%sudo'
+    state: absent
+    validate: 'visudo -cf %s'

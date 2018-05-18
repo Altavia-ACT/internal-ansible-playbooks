@@ -1,0 +1,11 @@
+---
+- name: copy cert-renew script
+  copy:
+    src: templates/cert-renew.sh
+    dest: /root/cert-renew.sh
+    mode: 0755
+
+- name: run cron monthly
+  cron:
+    special_time: monthly
+    job: '/root/cert-renew.sh'

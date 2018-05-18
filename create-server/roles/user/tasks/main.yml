@@ -1,0 +1,21 @@
+---
+- name: Add Admin Users
+  user:
+    name: '{{ item.username }}'
+    append: yes
+    password: '{{ item.password }}'
+    shell: /bin/zsh
+  with_items: '{{ users }}'
+
+- name: Enable Remote Access to admin users
+  authorized_key:
+    user: '{{ item.username }}'
+    key: '{{ item.public_key }}'
+  with_items: '{{ users }}'
+
+- name: Create sudoers entries for admin users
+  template:
+    src: templates/sudoers.j2
+    dest: '/etc/sudoers.d/{{ item.username }}'
+    validate: 'visudo -cf %s'
+  with_items: '{{ users }}'

@@ -1,0 +1,44 @@
+---
+- name: Remove default php-fpm pool
+  file:
+    path: /etc/php/7.1/fpm/pool.d/www.conf
+    state: absent
+  notify:
+    - Restart PHP7.2-fpm
+
+- name: Create php-fpm pool directory
+  file:
+    path: /etc/php/7.1/fpm/pool.d
+    state: directory
+    owner: www-data
+
+- name: Create php-fpm log directory
+  file:
+    path: /var/log/php-fpm
+    state: directory
+    owner: www-data
+
+- name: Create php log directory
+  file:
+    path: /var/log/php
+    state: directory
+    owner: www-data
+
+- name: Create php upload directory
+  file:
+    path: /var/lib/php/upload
+    state: directory
+    owner: www-data
+
+- name: Create php session directory
+  file:
+    path: /var/lib/php/session
+    state: directory
+    owner: www-data
+
+- name: Modify php.ini settings
+  copy:
+    src: files/php.ini
+    dest: /etc/php/7.1/fpm/php.ini
+  notify:
+    - Restart PHP7.2-fpm

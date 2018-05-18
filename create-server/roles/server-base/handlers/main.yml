@@ -1,0 +1,4 @@
+- name: Restart Unattended Upgrades
+  service:
+    name: unattended-upgrades
+    state: restarted

@@ -1,0 +1,35 @@
+---
+- name: Get php gpg key
+  get_url:
+    url: https://packages.sury.org/php/apt.gpg
+    dest: /etc/apt/trusted.gpg.d/php.gpg
+    mode: 0755
+
+- name: Create sources.list.d/php.list file
+  copy:
+    dest: /etc/apt/sources.list.d/php.list
+    src: files/php.list
+
+- name: Update apt cache
+  apt:
+    update_cache: true
+
+- name: Install php
+  apt:
+    package: '{{ item }}'
+    state: present
+    update_cache: yes
+  with_items:
+    - php7.2
+    - php7.2-cli
+    - php7.2-json
+    - php7.2-mysql
+    - php7.2-xml
+    - php7.2-mbstring
+    - php7.2-curl
+    - php7.2-zip
+    - php7.2-mcrypt
+    - php7.2-gd
+    - php7.2-imagick
+    - php7.2-fpm
+  notify: Start PHP7.2-fpm

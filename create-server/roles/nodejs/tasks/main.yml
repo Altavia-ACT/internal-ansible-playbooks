@@ -1,0 +1,17 @@
+---
+- name: Get nodejs 8.x debian sources
+  get_url:
+    url: https://deb.nodesource.com/setup_8.x
+    dest: /tmp/node_setup
+    mode: 0755
+
+- name: Add nodejs 8.x sources
+  command: ./node_setup
+  args:
+    chdir: /tmp/
+
+- name: Install nodejs
+  apt:
+    package: nodejs
+    state: present
+    update_cache: yes

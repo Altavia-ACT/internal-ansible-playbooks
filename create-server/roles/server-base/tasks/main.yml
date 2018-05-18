@@ -1,0 +1,5 @@
+---
+- include: hostname.yml
+- include: packages.yml
+- include: timezone.yml
+- include: ssl_certificate.yml
