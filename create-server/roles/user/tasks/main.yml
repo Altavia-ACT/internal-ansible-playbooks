@@ -16,6 +16,7 @@
 - name: Create sudoers entries for admin users
   template:
     src: templates/sudoers.j2
-    dest: '/etc/sudoers.d/{{ item.username }}'
+    dest: '/etc/sudoers.d/{{ item.sudoers }}'
+    mode: 0440
     validate: 'visudo -cf %s'
   with_items: '{{ users }}'

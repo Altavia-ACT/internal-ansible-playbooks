@@ -1,6 +1,7 @@
 ---
 users:
   - username: d.stinglhamber
+    sudoers: dstinglhamber
     password: !vault |
       $ANSIBLE_VAULT;1.1;AES256
       35656236636536396436343833386331383736363031393735323134653262366538626161386235
@@ -14,6 +15,7 @@ users:
       32646330313832316531633564613638373936343331323463643663363636323830
     public_key: "{{ lookup('file', 'd.stinglhamber.pub') }}"
   - username: m.merah
+    sudoers: mmerah
     password: !vault |
       $ANSIBLE_VAULT;1.1;AES256
       38303639353864656366303834373261333730343732623530386433376162326264383133613830
