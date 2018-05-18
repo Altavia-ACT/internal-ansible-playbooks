@@ -1,3 +1,4 @@
+---
 - name: Create app user
   user:
     name: '{{ user }}'
@@ -19,5 +20,5 @@
     user: '{{ user }}'
     key: '{{ item }}'
   with_items:
-    - '{{ lookup('file', 'd.stinglhamber.pub') }}'
-    - '{{ lookup('file', 'm.merah.pub') }}'
+    - "{{ lookup('file', 'd.stinglhamber.pub') }}"
+    - "{{ lookup('file', 'm.merah.pub') }}"

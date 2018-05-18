@@ -1,6 +1,7 @@
 ---
 app_name:
 
+ssl:
 mysql:
 php:
 laravel:
@@ -16,3 +17,5 @@ mysql_root_passwd:
 domain:
 subdomain:
 root_folder:
+
+mail:

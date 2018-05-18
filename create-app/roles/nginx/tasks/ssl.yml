@@ -1,5 +1,5 @@
 ---
-- stat: path=/etc/letsencrypt/live/{{ domain }}/fullchain.pem
+- stat: path=/etc/letsencrypt/live/{{ uri }}/fullchain.pem
   register: fullchain
 
 - name: Create SSL certificates
@@ -7,13 +7,13 @@
   when: (ssl == True) and (subdomain != 'www') and (fullchain.stat.exists == False)
 
 - name: Create SSL certificates
-  command: certbot certonly --webroot -w /tmp/letsencrypt -d {{ domain }} -d {{ tld }} --agree-tos -m {{ mail }}
+  command: certbot certonly --webroot -w /tmp/letsencrypt -d {{ uri }} -d {{ domain }} --agree-tos -m {{ mail }}
   when: (ssl == True) and (subdomain == 'www') and (fullchain.stat.exists == False)
 
 - name: Deploy nginx site ssl config
   template:
     src: templates/subdomain-ssl-active.conf.j2
-    dest: '/etc/nginx/sites-available/{{ domain }}'
+    dest: '/etc/nginx/sites-available/{{ uri }}'
     owner: '{{ user }}'
   when: ssl == True
   notify:

@@ -1,16 +1,16 @@
 {% if subdomain == "www" %}
 # redirect www to non-www
 server {
-    server_name {{ domain }};
-    return 301 $scheme://{{ tld }}$request_uri;
+    server_name {{ uri }};
+    return 301 $scheme://{{ domain }}$request_uri;
 }
 {% endif %}
 
 server {
 {% if subdomain == "www" %}
-    server_name {{ tld }};
-{% else %}
     server_name {{ domain }};
+{% else %}
+    server_name {{ uri }};
 {% endif %}
 
     root /home/{{ user }}/current{{ root_folder }};

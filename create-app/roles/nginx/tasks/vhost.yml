@@ -2,25 +2,25 @@
 - name: Deploy nginx site config
   template:
     src: templates/subdomain.conf.j2
-    dest: '/etc/nginx/sites-available/{{ domain }}.conf'
+    dest: '/etc/nginx/sites-available/{{ uri }}.conf'
     owner: '{{ user }}'
   when: ssl == False
 
 - name: Deploy nginx site ssl config
   template:
     src: templates/subdomain-ssl.conf.j2
-    dest: '/etc/nginx/sites-available/{{ domain }}.conf'
+    dest: '/etc/nginx/sites-available/{{ uri }}.conf'
     owner: '{{ user }}'
   when: ssl == True
 
 - name: Activate nginx site
   file:
-    src: '/etc/nginx/sites-available/{{ domain }}.conf'
-    dest: '/etc/nginx/sites-enabled/{{ domain }}.conf'
+    src: '/etc/nginx/sites-available/{{ uri }}.conf'
+    dest: '/etc/nginx/sites-enabled/{{ uri }}.conf'
     state: link
     owner: '{{ user }}'
 
-- name: Reload nginx
+- name: Restart nginx
   service:
     name: nginx
-    state: reloaded
+    state: restarted

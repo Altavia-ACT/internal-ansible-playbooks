@@ -15,19 +15,15 @@
 - name: Create user reload script
   template:
     src: templates/reload_php-fpm.sh.j2
-    dest: '{{ scripts_dir }}/reload_php-fpm.sh'
+    dest: '/home/{{ user }}/scripts/reload_php-fpm.sh'
     owner: '{{ user }}'
     group: '{{ user }}'
     mode: 0755
 
 - name: Give user permissions to reload their php process
-  lineinfile:
-    path: '/etc/sudoers.d/{{ user }}'
-    state: present
-    regexp: '^{{ user }}'
-    line: '{{ user }} ALL=NOPASSWD:/etc/init.d/php7.2-fpm-{{ app_name }} reload'
+  template:
+    src: templates/sudoers.j2
+    dest: '/etc/sudoers.d/{{ user }}'
 
 - name: Start app php pool
-  service:
-    name: 'php7.2-fopm-{{ app_name }}'
-    state: started
+  shell: '/etc/init.d/php7.2-fpm-{{ app_name }} start'

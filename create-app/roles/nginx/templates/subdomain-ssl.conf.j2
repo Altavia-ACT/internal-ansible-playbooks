@@ -5,16 +5,16 @@ server {
 #    listen 443 ssl http2;
 #    listen [::]:443 ssl http2;
 
-#    ssl_certificate /etc/letsencrypt/live/{{ domain }}/fullchain.pem;
-#    ssl_certificate_key /etc/letsencrypt/live/{{ domain }}/privkey.pem;
-#    ssl_trusted_certificate /etc/letsencrypt/live/{{ domain }}/fullchain.pem;
+#    ssl_certificate /etc/letsencrypt/live/{{ uri }}/fullchain.pem;
+#    ssl_certificate_key /etc/letsencrypt/live/{{ uri }}/privkey.pem;
+#    ssl_trusted_certificate /etc/letsencrypt/live/{{ uri }}/fullchain.pem;
 #
 #    include /etc/nginx/includes/headers.conf;
 #    include /etc/nginx/includes/locations.conf;
 #    include /etc/nginx/includes/ssl.conf;
 
-    server_name {{ domain }};
-    return 301 $scheme://{{ tld }}$request_uri;
+    server_name {{ uri }};
+    return 301 $scheme://{{ domain }}$request_uri;
 }
 
 {% endif %}
@@ -23,9 +23,9 @@ server {
     listen 80;
 
 {% if subdomain == "www" %}
-    server_name {{ tld }};
-{% else %}
     server_name {{ domain }};
+{% else %}
+    server_name {{ uri }};
 {% endif %}
 
     include /etc/nginx/includes/general.conf;
@@ -33,9 +33,9 @@ server {
 
     location / {
 {% if subdomain == "www" %}
-        return 301 https://{{ tld }}$request_uri;
-{% else %}
         return 301 https://{{ domain }}$request_uri;
+{% else %}
+        return 301 https://{{ uri }}$request_uri;
 {% endif %}
     }
 }
@@ -44,9 +44,9 @@ server {
 #    listen 443 ssl http2;
 #
 {% if subdomain == "www" %}
-#    server_name {{ tld }};
-{% else %}
 #    server_name {{ domain }};
+{% else %}
+#    server_name {{ uri }};
 {% endif %}
 #
 #    root /home/{{ user }}/current{{ root_folder }};
@@ -56,16 +56,15 @@ server {
 #    index index.html;
 {% endif %}
 #
-#    ssl_certificate /etc/letsencrypt/live/{{ domain }}/fullchain.pem;
-#    ssl_certificate_key /etc/letsencrypt/live/{{ domain }}/privkey.pem;
-#    ssl_trusted_certificate /etc/letsencrypt/live/{{ domain }}/fullchain.pem;
+#    ssl_certificate /etc/letsencrypt/live/{{ uri }}/fullchain.pem;
+#    ssl_certificate_key /etc/letsencrypt/live/{{ uri }}/privkey.pem;
+#    ssl_trusted_certificate /etc/letsencrypt/live/{{ uri }}/fullchain.pem;
 #
-#    access_log  {{ log_dir }}/access.log;
-#    error_log  {{ log_dir }}/error.log;
+#    access_log  /home/{{ user }}/logs/access.log;
+#    error_log  /home/{{ user }}/logs/error.log;
 #
-#    include /etc/nginx/includes/locations.conf;
+#    include /etc/nginx/includes/general.conf;
 #    include /etc/nginx/includes/ssl.conf;
-#    include /etc/nginx/includes/headers.conf;
 #
 {% if php == true %}
 #    location / {

@@ -1,2 +1,2 @@
 ---
-- tld: '{{ subdomain }}.{{ domain }}'
+uri: '{{ subdomain }}.{{ domain }}'

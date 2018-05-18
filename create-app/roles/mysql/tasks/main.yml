@@ -3,14 +3,14 @@
   mysql_db:
     name: '{{ mysql_db_name }}'
     state: present
-    login_password: '{{ mysql_root_password }}'
+    login_password: '{{ mysql_root_passwd }}'
     login_user: root
 
 - name: Create mysql user
   mysql_user:
-    name: '{{ project_name }}'
+    name: '{{ app_name }}'
     password: '{{ mysql_passwd }}'
     priv: '{{ mysql_db_name }}.*:ALL'
     state: present
-    login_password: '{{ mysql_root_password }}'
+    login_password: '{{ mysql_root_passwd }}'
     login_user: root

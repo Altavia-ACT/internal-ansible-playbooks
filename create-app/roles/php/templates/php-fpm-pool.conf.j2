@@ -10,7 +10,7 @@ user = {{ user }}
 group = {{ user }}
 
 request_slowlog_timeout = 5s
-slowlog = {{ log_dir }}/slowlog.log
+slowlog = /home/{{ user }}/logs/slowlog.log
 
 listen = /var/run/php/{{ app_name }}.sock
 listen.owner = {{ user }}

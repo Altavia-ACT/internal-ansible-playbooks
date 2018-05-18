@@ -34,18 +34,17 @@
     owner: '{{ user }}'
     group: '{{ user }}'
 
+- name: Create persistent config directory
+  file:
+    path: '/home/{{ user }}/persistent/config'
+    state: directory
+    owner: '{{ user }}'
+    group: '{{ user }}'
+
 - name: Create env file
   template:
     src: templates/env.j2
     dest: '/home/{{ user }}/persistent/config/env'
-    owner: '{{ user }}'
-    group: '{{ user }}'
-
-- name: symlink env file
-  file:
-    src: '/home/{{ user }}/persistent/config/env'
-    dest: '/home/{{ user }}/current/.env'
-    state: link
     owner: '{{ user }}'
     group: '{{ user }}'
 
