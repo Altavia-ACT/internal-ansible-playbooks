@@ -1,0 +1,23 @@
+- name: Create app user
+  user:
+    name: '{{ user }}'
+    password: '{{ passwd }}'
+    shell: /bin/zsh
+    state: present
+    generate_ssh_key: yes
+    ssh_key_bits: 4096
+    ssh_key_file: .ssh/github
+    ssh_key_comment: digital@actstar.com
+
+- name: Add ssh config to app user
+  copy:
+    src: files/ssh_config
+    dest: '/home/{{ user }}/.ssh/config'
+
+- name: Enable remote access to app user
+  authorized_key:
+    user: '{{ user }}'
+    key: '{{ item }}'
+  with_items:
+    - '{{ lookup('file', 'd.stinglhamber.pub') }}'
+    - '{{ lookup('file', 'm.merah.pub') }}'

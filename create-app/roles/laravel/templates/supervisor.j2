@@ -1,0 +1,9 @@
+[program:{{ app_name }}-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/{{ user }}/current/artisan horizon
+autostart=true
+autorestart=true
+user={{ user }}
+numprocs=1
+redirect_stderr=true
+stdout_logfile=/home/{{ user }}/logs/horizon.log

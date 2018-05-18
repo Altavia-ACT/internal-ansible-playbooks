@@ -1,0 +1,35 @@
+---
+- name: Create /tmp/letsencrypt directory
+  file:
+    path: /tmp/letsencrypt/.well-known
+    state: directory
+    mode: 0777
+
+- name: Create acme-challenge directory
+  file:
+    path: /tmp/letsencrypt/.well-known/acme-challenge
+    state: directory
+    mode: 0777
+
+- name: Create default directories
+  file:
+    path: '{{ item }}'
+    state: directory
+    owner: '{{ user }}'
+    group: '{{ user }}'
+  with_items:
+    - '/home/{{ user }}/logs'
+    - '/home/{{ user }}/releases'
+    - '/home/{{ user }}/persistent'
+    - '/home/{{ user }}/scripts'
+
+- name: Create log files
+  file:
+    path: '/home/{{ user }}/logs/{{ item }}'
+    state: touch
+    owner: '{{ user }}'
+    group: '{{ user }}'
+  with_items:
+    - error.log
+    - access.log
+    - slowlog.log

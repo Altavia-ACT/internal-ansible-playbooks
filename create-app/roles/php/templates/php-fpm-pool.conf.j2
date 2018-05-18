@@ -1,0 +1,33 @@
+[global]
+pid = /var/run/php/{{ app_name }}.pid
+emergency_restart_threshold = 0
+emergency_restart_interval = 0
+process_control_timeout = 0
+daemonize = yes
+
+[{{ app_name }}]
+user = {{ user }}
+group = {{ user }}
+
+request_slowlog_timeout = 5s
+slowlog = {{ log_dir }}/slowlog.log
+
+listen = /var/run/php/{{ app_name }}.sock
+listen.owner = {{ user }}
+listen.group = {{ user }}
+listen.mode = 0666
+
+pm = ondemand
+pm.max_children = 5
+pm.process_idle_timeout = 10s
+pm.max_requests = 500
+
+request_terminate_timeout = 120s
+rlimit_files = 131072
+rlimit_core = unlimited
+catch_workers_output = yes
+
+env[HOSTNAME] = $HOSTNAME
+
+php_admin_value[upload_max_filesize] = 16M
+php_admin_value[post_max_size] = 16M

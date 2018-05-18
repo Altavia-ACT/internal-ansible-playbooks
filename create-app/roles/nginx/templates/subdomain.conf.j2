@@ -1,0 +1,46 @@
+{% if subdomain == "www" %}
+# redirect www to non-www
+server {
+    server_name {{ domain }};
+    return 301 $scheme://{{ tld }}$request_uri;
+}
+{% endif %}
+
+server {
+{% if subdomain == "www" %}
+    server_name {{ tld }};
+{% else %}
+    server_name {{ domain }};
+{% endif %}
+
+    root /home/{{ user }}/current{{ root_folder }};
+{% if php == true %}
+    index index.php;
+{% else %}
+    index index.html;
+{% endif %}
+
+    access_log  {{ log_dir }}/access.log;
+    error_log  {{ log_dir }}/error.log;
+
+    include /etc/nginx/includes/headers.conf;
+    include /etc/nginx/includes/locations.conf;
+
+{% if php == true %}
+    location / {
+        try_files $uri $uri/ /index.php?query_string;
+    }
+
+    location ~ \.php$ {
+        try_files $uri =404;
+
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+        fastcgi_index index.php;
+        fastcgi_pass unix:/var/run/php/{{ app_name }}.sock;
+
+        limit_req zone=one burst=5 nodelay;
+    }
+{% endif %}
+}

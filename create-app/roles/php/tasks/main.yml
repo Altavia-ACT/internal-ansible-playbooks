@@ -1,0 +1,33 @@
+---
+- name: Deploy php-fpm pool config
+  template:
+    src: templates/php-fpm-pool.conf.j2
+    dest: '/etc/php/7.2/fpm/pool.d/{{ app_name }}.conf'
+    owner: '{{ user }}'
+    group: '{{ user }}'
+
+- name: Deploy init.d script
+  template:
+    src: templates/init.d.j2
+    dest: '/etc/init.d/php7.2-fpm-{{ app_name }}'
+    mode: 0755
+
+- name: Create user reload script
+  template:
+    src: templates/reload_php-fpm.sh.j2
+    dest: '{{ scripts_dir }}/reload_php-fpm.sh'
+    owner: '{{ user }}'
+    group: '{{ user }}'
+    mode: 0755
+
+- name: Give user permissions to reload their php process
+  lineinfile:
+    path: '/etc/sudoers.d/{{ user }}'
+    state: present
+    regexp: '^{{ user }}'
+    line: '{{ user }} ALL=NOPASSWD:/etc/init.d/php7.2-fpm-{{ app_name }} reload'
+
+- name: Start app php pool
+  service:
+    name: 'php7.2-fopm-{{ app_name }}'
+    state: started

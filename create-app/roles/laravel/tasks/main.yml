@@ -1,0 +1,62 @@
+---
+- name: Create persistent app storage directory
+  file:
+    path: '/home/{{ user }}/persistent/storage/app/public'
+    state: directory
+    owner: '{{ user }}'
+    group: '{{ user }}'
+
+- name: Create persistent log storage directory
+  file:
+    path: '/home/{{ user }}/persistent/storage/logs'
+    state: directory
+    owner: '{{ user }}'
+    group: '{{ user }}'
+
+- name: Create persistent framework cache storage directory
+  file:
+    path: '/home/{{ user }}/persistent/storage/framework/cache'
+    state: directory
+    owner: '{{ user }}'
+    group: '{{ user }}'
+
+- name: Create persistent framework session storage directory
+  file:
+    path: '/home/{{ user }}/persistent/storage/framework/sessions'
+    state: directory
+    owner: '{{ user }}'
+    group: '{{ user }}'
+
+- name: Create persistent framework views storage directory
+  file:
+    path: '/home/{{ user }}/persistent/storage/framework/views'
+    state: directory
+    owner: '{{ user }}'
+    group: '{{ user }}'
+
+- name: Create env file
+  template:
+    src: templates/env.j2
+    dest: '/home/{{ user }}/persistent/config/env'
+    owner: '{{ user }}'
+    group: '{{ user }}'
+
+- name: symlink env file
+  file:
+    src: '/home/{{ user }}/persistent/config/env'
+    dest: '/home/{{ user }}/current/.env'
+    state: link
+    owner: '{{ user }}'
+    group: '{{ user }}'
+
+- name: Create supervisor configuration
+  become: yes
+  template:
+    src: templates/supervisor.j2
+    dest: '/etc/supervisor/conf.d/{{ app_name }}-worker.conf'
+  when: (horizon == True)
+
+- name: Define scheduler cron job
+  cron:
+    job: 'php /home/{{ user }}/current/artisan schedule:run >> /dev/null 2>&1'
+    user: '{{ user }}'
