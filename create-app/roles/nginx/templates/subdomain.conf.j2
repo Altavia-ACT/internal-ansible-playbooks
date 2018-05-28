@@ -20,11 +20,10 @@ server {
     index index.html;
 {% endif %}
 
-    access_log  {{ log_dir }}/access.log;
-    error_log  {{ log_dir }}/error.log;
+    access_log  /home/{{ user }}/logs/access.log;
+    error_log  /home/{{ user }}/logs/error.log;
 
-    include /etc/nginx/includes/headers.conf;
-    include /etc/nginx/includes/locations.conf;
+    include /etc/nginx/includes/general.conf;
 
 {% if php == true %}
     location / {

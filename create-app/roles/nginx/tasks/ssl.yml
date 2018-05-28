@@ -13,8 +13,8 @@
 - name: Deploy nginx site ssl config
   template:
     src: templates/subdomain-ssl-active.conf.j2
-    dest: '/etc/nginx/sites-available/{{ uri }}'
+    dest: '/etc/nginx/sites-available/{{ uri }}.conf'
     owner: '{{ user }}'
   when: ssl == True
   notify:
-    - restart nginx
+    - Restart nginx
