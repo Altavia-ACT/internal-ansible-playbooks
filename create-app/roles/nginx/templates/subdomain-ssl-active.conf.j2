@@ -13,7 +13,7 @@ server {
     include /etc/nginx/includes/ssl.conf;
 
     server_name {{ uri }};
-    return 301 $scheme://{{ uri }}$request_uri;
+    return 301 $scheme://{{ domain }}$request_uri;
 }
 
 {% endif %}

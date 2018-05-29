@@ -33,7 +33,7 @@ http {
 
 	# limits
 	limit_req_log_level warn;
-	limit_req_zone $binary_remote_addr zone=login:10m rate=10r/m;
+	limit_req_zone $binary_remote_addr zone=one:10m rate=10r/m;
 
 	# load configs
 	include /etc/nginx/conf.d/*.conf;
