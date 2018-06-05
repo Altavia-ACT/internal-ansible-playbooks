@@ -23,7 +23,7 @@
 - name: Give user permissions to reload their php process
   template:
     src: templates/sudoers.j2
-    dest: '/etc/sudoers.d/{{ user }}'
+    dest: "/etc/sudoers.d/{{ user | regex_replace('-', '') }}"
 
 - name: Start app php pool
   shell: '/etc/init.d/php7.2-fpm-{{ app_name }} start'

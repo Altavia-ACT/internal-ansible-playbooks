@@ -3,7 +3,7 @@
   register: fullchain
 
 - name: Create SSL certificates
-  command: certbot certonly --webroot -w /tmp/letsencrypt -d {{ domain }} --agree-tos -m {{ mail }}
+  command: certbot certonly --webroot -w /tmp/letsencrypt -d {{ uri }} --agree-tos -m {{ mail }}
   when: (ssl == True) and (subdomain != 'www') and (fullchain.stat.exists == False)
 
 - name: Create SSL certificates
