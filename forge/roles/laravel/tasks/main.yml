@@ -1,0 +1,45 @@
+---
+- name: Create default directories
+  file:
+    path: '{{ item }}'
+    state: directory
+    owner: 'forge'
+    group: 'forge'
+  with_items:
+    - '/home/forge/{{ website }}/releases'
+    - '/home/forge/{{ website }}/persistent'
+
+- name: Create persistent app storage directory
+  file:
+    path: '/home/forge/{{ website }}/persistent/storage/app/public'
+    state: directory
+    owner: 'forge'
+    group: 'forge'
+
+- name: Create persistent log storage directory
+  file:
+    path: '/home/forge/{{ website }}/persistent/storage/logs'
+    state: directory
+    owner: 'forge'
+    group: 'forge'
+
+- name: Create persistent framework cache storage directory
+  file:
+    path: '/home/forge/{{ website }}/persistent/storage/framework/cache'
+    state: directory
+    owner: 'forge'
+    group: 'forge'
+
+- name: Create persistent framework session storage directory
+  file:
+    path: '/home/forge/{{ website }}/persistent/storage/framework/sessions'
+    state: directory
+    owner: 'forge'
+    group: 'forge'
+
+- name: Create persistent framework views storage directory
+  file:
+    path: '/home/forge/{{ website }}/persistent/storage/framework/views'
+    state: directory
+    owner: 'forge'
+    group: 'forge'

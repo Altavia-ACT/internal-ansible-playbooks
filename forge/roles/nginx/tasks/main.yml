@@ -1,0 +1,10 @@
+---
+- name: Implement asset caching
+  copy:
+    src: files/assets-caching.conf
+    dest: "/etc/nginx/forge-conf/{{ website }}/server/assets-caching.conf"
+
+- name: Add security headers
+  copy:
+    src: files/headers.conf
+    dest: "/etc/nginx/forge-conf/{{ website }}/server/headers.conf"

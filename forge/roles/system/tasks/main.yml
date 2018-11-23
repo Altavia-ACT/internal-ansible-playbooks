@@ -1,0 +1,20 @@
+---
+- name: Create scripts directory
+  file:
+    path: '/home/forge/scripts'
+    state: directory
+    owner: 'forge'
+    group: 'forge'
+
+- name: Create reload script
+  template:
+    src: files/reload.sh
+    dest: '/home/forge/scripts/reload.sh'
+    owner: 'forge'
+    group: 'forge'
+    mode: 0755
+
+- name: Give permissions to reload php and supervisor
+  template:
+    src: templates/sudoers.j2
+    dest: "/etc/sudoers.d/supervisor"
